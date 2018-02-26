@@ -1,0 +1,288 @@
+{% extends 'rebels/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Search for an article
+{% endblock %}
+{% block body_block %}
+
+                <style media="screen">
+
+.dropdown.dropdown-lg .dropdown-menu {
+  margin-top: -1px;
+  padding: 6px 20px;
+}
+.input-group-btn .btn-group {
+  display: flex !important;
+}
+.btn-group .btn {
+  border-radius: 0;
+  margin-left: -1px;
+}
+.btn-group .btn:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.btn-group .form-horizontal .btn[type="submit"] {
+border-top-left-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+.form-horizontal .form-group {
+  margin-left: 0;
+  margin-right: 0;
+}
+.form-group .form-control:last-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+  #adv-search {
+      width: 500px;
+      margin: 0 auto;
+  }
+  .dropdown.dropdown-lg {
+      position: static !important;
+  }
+  .dropdown.dropdown-lg .dropdown-menu {
+      min-width: 500px;
+  }
+}
+                </style>
+                <div class="container">
+                	<div class="row">
+                		<div class="col-md-12">
+                            <div class="input-group" id="adv-search">
+                                <input type="text" class="form-control" placeholder="Search for snippets" />
+                                <div class="input-group-btn">
+                                    <div class="btn-group" role="group">
+                                        <div class="dropdown dropdown-lg">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <form class="form-horizontal" role="form">
+                                                  <div class="form-group">
+                                                    <label for="filter">Filter by</label>
+                                                    <select class="form-control">
+                                                        <option value="0" selected>All Snippets</option>
+                                                        <option value="1">Featured</option>
+                                                        <option value="2">Most popular</option>
+                                                        <option value="3">Top rated</option>
+                                                        <option value="4">Most commented</option>
+                                                    </select>
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="contain">Author</label>
+                                                    <input class="form-control" type="text" />
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="contain">Contains the words</label>
+                                                    <input class="form-control" type="text" />
+                                                  </div>
+                                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                	</div>
+
+                <div class="container">
+
+                  <hgroup class="mb20">
+                    <h1>Search Results</h1>
+                    <h2 class="lead"><strong class="search-text-color">3</strong> results were found for the search for <strong class="search-text-color">Lorem</strong></h2>
+                  </hgroup>
+                  <section class="col-xs-12 col-sm-6 col-md-12">
+                    <article class="search-result row">
+                      <div class="col-xs-12 col-sm-12 col-md-3">
+                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                          <li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
+                          <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
+                          <li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
+                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
+                        </ul>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+                        <form id="input-star-rating-form">
+                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
+                        </form>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
+                      </div>
+                      <span class="clearfix borda"></span>
+                    </article>
+
+                    <article class="search-result row">
+                      <div class="col-xs-12 col-sm-12 col-md-3">
+                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/food" alt="Lorem ipsum" /></a>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                          <li><i class="glyphicon glyphicon-calendar"></i> <span>02/13/2014</span></li>
+                          <li><i class="glyphicon glyphicon-time"></i> <span>8:32 pm</span></li>
+                          <li><i class="glyphicon glyphicon-tags"></i> <span>Food</span></li>
+                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
+                        </ul>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-7">
+                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+                        <form id="input-star-rating-form">
+                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
+                        </form>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
+                      </div>
+                      <span class="clearfix borda"></span>
+                    </article>
+
+                    <article class="search-result row">
+                      <div class="col-xs-12 col-sm-12 col-md-3">
+                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/sports" alt="Lorem ipsum" /></a>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                          <li><i class="glyphicon glyphicon-calendar"></i> <span>01/11/2014</span></li>
+                          <li><i class="glyphicon glyphicon-time"></i> <span>10:13 am</span></li>
+                          <li><i class="glyphicon glyphicon-tags"></i> <span>Sport</span></li>
+                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
+                        </ul>
+                      </div>
+                      <div class="col-xs-12 col-sm-12 col-md-7">
+                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
+                        <form id="input-star-rating-form">
+                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
+                        </form>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
+                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
+                      </div>
+                      <span class="clearfix border"></span>
+                    </article>
+
+                  </section>
+                </div>
+
+                <style media="screen">
+                  #input-star-rating-form {
+                    font-size: 8px;
+                  }
+
+                  @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
+
+
+                  .mb20 {
+                    margin-bottom: 20px;
+                  }
+
+                  .search-text-color {
+                    color: rgb(156, 39, 176);
+                  }
+
+                  hgroup {
+                    padding-left: 15px;
+                    border-bottom: 1px solid #ccc;
+                  }
+
+                  hgroup h1 {
+                    font: 500 normal 1.625em "Roboto", Arial, Verdana, sans-serif;
+                    color: #2a3644;
+                    margin-top: 0;
+                    line-height: 1.15;
+                  }
+
+                  hgroup h2.lead {
+                    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
+                    color: #2a3644;
+                    margin: 0;
+                    padding-bottom: 10px;
+                  }
+
+                  .search-result .thumbnail {
+                    border-radius: 0 !important;
+                  }
+
+                  .search-result:first-child {
+                    margin-top: 0 !important;
+                  }
+
+                  .search-result {
+                    margin-top: 20px;
+                  }
+
+                  .search-result .col-md-2 {
+                    border-right: 1px dotted #ccc;
+                    min-height: 140px;
+                  }
+
+                  .search-result ul {
+                    padding-left: 0 !important;
+                    list-style: none;
+                  }
+
+                  .search-result ul li {
+                    font: 400 normal .85em "Roboto", Arial, Verdana, sans-serif;
+                    line-height: 30px;
+                  }
+
+                  .search-result ul li i {
+                    padding-right: 5px;
+                  }
+
+                  .search-result .col-md-7 {
+                    position: relative;
+                  }
+
+                  .search-result h3 {
+                    font: 500 normal 1.375em "Roboto", Arial, Verdana, sans-serif;
+                    margin-top: 0 !important;
+                    margin-bottom: 10px !important;
+                  }
+
+                  .search-result h3>a,
+                  .search-result>i {
+                    color: #248dc1 !important;
+                  }
+
+                  .search-result p {
+                    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
+                  }
+
+                  .search-result span.plus {
+                    position: absolute;
+                    right: 0;
+                    top: 126px;
+                  }
+
+                  .search-result span.plus a {
+                    background-color: #248dc1;
+                    padding: 5px 5px 3px 5px;
+                  }
+
+                  .search-result span.plus a:hover {
+                    background-color: #414141;
+                  }
+
+                  .search-result span.plus a i {
+                    color: #fff !important;
+                  }
+
+                  .search-result span.border {
+                    display: block;
+                    width: 97%;
+                    margin: 0 15px;
+                    border-bottom: 1px dotted #ccc;
+                  }
+                </style>
+
+             
+
+{% endblock %}

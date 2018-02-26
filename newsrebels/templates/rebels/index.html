@@ -1,0 +1,195 @@
+{% extends 'rebels/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Welcome to NewsRebels
+{% endblock %}
+{% block body_block %}
+
+
+  <div class="container-fluid" id="fPage">
+    <div class="row">
+      <div class="col-12">
+        <div class="jumbotron text-center" id="jumb-fPage">
+          <h2>Searching  news was never so fast.</h2>
+          <div class="ui-group-buttons   hidden-xs">
+            <a href="./read_more.html" class="btn btn-fpage  btn-md">Read more</a>
+            <div class="or or-md"></div>
+            <a href="{% url 'search' %}" class="btn btn-fpage  btn-md"> News Search </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="CommentsFromOurUsers">
+    <div class="row">
+      <div class="col-12">
+        <div class="col-md-8 col-md-offset-2 pagination-centered text-center" style="padding: 30px;">
+          <h2 class="title">Testimonials</h2>
+          <!--<h5 class="description">We lift the heavy burden, dig depper and give assurance or otherwise past behavior of your next hire, verify credentials and ensure you hire the best</h5>
+         -->
+        </div>
+      </div>
+    </div>
+    <!-- Three columns of text below the carousel -->
+    <div class="row" id="circles">
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <img class="img-circle" src="{% static "./img/comment-1.jpg" %}" alt="Generic placeholder image" width="140" height="140">
+          <h2>Nik Stef</h2>
+          <p>
+            <div class="rating-container rating-sm rating-animate rating-displayonly">
+              <div class="rating-stars">
+                <span class="empty-stars"><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span>                <span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span></span>
+                <span class="filled-stars" style="width: 100%;"><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span>                <span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span></span>
+              </div>
+            </div>
+          </p>
+        </div>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+      </div>
+      <!-- /.col-lg-4 -->
+      <div class="col-lg-3 col-lg-6">
+        <div class="text-center">
+          <img class="img-circle" src="{% static "./img/comment-2.jpg" %}" alt="Generic placeholder image" width="140" height="140">
+          <h2>Pav Evan</h2>
+          <p>
+            <div class="rating-container rating-sm rating-animate rating-displayonly">
+              <div class="rating-stars">
+                <span class="empty-stars"><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span>                <span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span></span>
+                <span class="filled-stars" style="width: 100%;"><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span>                <span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span></span>
+              </div>
+            </div>
+          </p>
+        </div>
+        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+      </div>
+      <!-- /.col-lg-4 -->
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <img class="img-circle" src="{% static "./img/comment-3.jpg" %}" alt="Generic placeholder image" width="140" height="140">
+          <h2>Nik Gr Jr</h2>
+          <p>
+            <div class="rating-container rating-sm rating-animate rating-displayonly">
+              <div class="rating-stars">
+                <span class="empty-stars"><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span>                <span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span></span>
+                <span class="filled-stars" style="width: 100%;"><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span>                <span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span></span>
+              </div>
+            </div>
+          </p>
+        </div>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="text-center">
+          <img class="img-circle" src="{% static "./img/comment-4.jpg" %}" alt="Generic placeholder image" width="140" height="140">
+          <h2>Evan Thes</h2>
+          <p>
+            <div class="rating-container rating-sm rating-animate rating-displayonly">
+              <div class="rating-stars">
+                <span class="empty-stars"><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span>                <span class="star"><i class="glyphicon glyphicon-star-empty"></i></span><span class="star"><i class="glyphicon glyphicon-star-empty"></i></span></span>
+                <span class="filled-stars" style="width: 100%;"><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span>                <span class="star"><i class="glyphicon glyphicon-star"></i></span><span class="star"><i class="glyphicon glyphicon-star"></i></span></span>
+              </div>
+            </div>
+          </p>
+        </div>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      </div>
+      <!-- /.col-lg-4 -->
+    </div>
+  </div>
+  <div class="container-fluid" id="WhatWeDo">
+    <div class="row">
+      <div class="col-12">
+        <!--QUOTES AREA-->
+        <div class="quotes-area section-padding">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="quotes-content text-center">
+                  <div class="col-md-8 col-md-offset-2 pagination-centered text-center" style="padding: 30px;">
+                    <h2 class="title">What we do</h2>
+                    <h5 class="description">We lift the heavy burden, dig depper and give assurance or otherwise past behavior of your next hire, verify credentials and ensure you hire the best</h5>
+                    <a href="./read_more.html" class="btn btn-placeOrder badge "> Read More </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/.row-->
+          </div>
+          <!--/.container-->
+        </div>
+        <!--END QUOTES AREA-->
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="hereIsOurTeam">
+    <div class="row">
+      <div class="col-12">
+        <section class="team">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1 col-md-12">
+                <div class="col-lg-12 col-offset-2">
+                  <h6 class="description">OUR TEAM</h6>
+                  <div class="row pt-md">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 profile">
+                      <div class="img-box">
+                        <img src="{% static "./img/stef.jpg" %}" class="img-responsive">
+                        <ul class="text-center">
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-facebook"></i>
+                            </li>
+                          </a>
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-twitter"></i>
+                            </li>
+                          </a>
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-linkedin"></i>
+                            </li>
+                          </a>
+                        </ul>
+                      </div>
+                      <h1>Nikolaou Stefanos</h1>
+                      <h2>Co-founder</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 profile">
+                      <div class="img-box">
+                        <img src="{% static "./img/Pavlos.jpg" %}" class="img-responsive">
+                        <ul class="text-center">
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-facebook"></i>
+                            </li>
+                          </a>
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-twitter"></i>
+                            </li>
+                          </a>
+                          <a href="#">
+                            <li>
+                              <i class="fa fa-linkedin"></i>
+                            </li>
+                          </a>
+                        </ul>
+                      </div>
+                      <h1>Evangelidis Pavloss</h1>
+                      <h2>Co-founder</h2>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
