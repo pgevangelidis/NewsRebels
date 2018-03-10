@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from rebels.forms import UserForm, UserProfileForm
 from datetime import datetime
 
 # Create your views here.
@@ -55,7 +56,7 @@ def user_login(request):
 		# request.POST.get('<variable>') returns None if the
 		# value does not exist, while request.POST['<variable>']
 		# will raise a KeyError exception.
-		username = request.POST.get('username')
+		username = request.POST.get('email')
 		password = request.POST.get('password')
 
 		# Use Django's machinery to attempt to see if the username/password
@@ -96,18 +97,22 @@ def some_view(request):
 def restricted(request):
 	return HttpResponse("Since you're logged in, you can see this text!")
 
+@login_required
 def suggested(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/suggested.html',)
 
+@login_required
 def article(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/article.html',)
 
+@login_required
 def search(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/search.html',)
 
+@login_required
 def latest_read(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/latest_read.html',)

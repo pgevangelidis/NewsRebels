@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from rebels import views
+from django.conf.urls import include
 
 urlpatterns = [
 	url(r'^$', views.index, name = 'index'),
@@ -13,4 +14,5 @@ urlpatterns = [
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^restricted/', views.restricted, name='restricted'),
 	url(r'^logout/$', views.user_logout, name='logout'),
+	url(r'^accounts/', include('registration.backends.simple.urls')),
 ]

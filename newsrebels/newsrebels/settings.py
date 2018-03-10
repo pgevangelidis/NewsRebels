@@ -53,6 +53,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = (
+  'rebels.backends.LoginUsingEmailAsUsernameBackend',
+  'django.contrib.auth.backends.ModelBackend',
+)
+
 ROOT_URLCONF = 'newsrebels.urls'
 
 TEMPLATES = [
@@ -74,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'newsrebels.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -95,6 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': { 'min_length': 6, }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -124,14 +129,14 @@ USE_TZ = True
 STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/rebels/login/'
-
 #If true, users can regitster
 REGISTRATION_OPEN = True
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
 REGISTRATION_AUTO_LOGIN = True
+
+LOGIN_URL = '/rebels/login/'
 
 LOGIN_REDIRECT_URL = '/rebels/'
 # The page users are directed to if they are not logged in
