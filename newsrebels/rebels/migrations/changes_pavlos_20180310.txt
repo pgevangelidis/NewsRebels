@@ -1,0 +1,11 @@
+Change #1 base.html
+
+switched the html code of the {% if user.is_authenticated %} with the {% else %} html code.
+	##  Reason: first time enter the site should display the "login" menu.
+	
+added the href for the login form.
+
+added the name tag in the html code, inside the login form for email and password.
+
+Changed the button tag to a for the logout button class.
+	
