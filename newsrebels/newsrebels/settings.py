@@ -24,6 +24,15 @@ MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0g%5rjb!2x3s)9&^7s@_=x#r1el#q*cxh!v+_*mh8a3n0upp%9'
 
+# Twitter Key
+SOCIAL_AUTH_TWITTER_KEY = '9FngA36WBXGPW0vf05Cm3MTZa'
+SOCIAL_AUTH_TWITTER_SECRET = 'r3e463AQwwwFXHzMCatPGidi0Sqf8Muipsx6Xv2ec8Z27yqGLG'
+
+# Twitter Key
+SOCIAL_AUTH_FACEBOOK_KEY = "218920218685627"
+SOCIAL_AUTH_FACEBOOK_SECRET = '7d456c3d60dc9e41a1bc4aea7ce8026f' 
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -41,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rebels',
     'registration',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -51,11 +61,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
   'rebels.backends.LoginUsingEmailAsUsernameBackend',
   'django.contrib.auth.backends.ModelBackend',
+
+  'social_core.backends.twitter.TwitterOAuth',
+  'social_core.backends.facebook.FacebookOAuth2',
 )
 
 ROOT_URLCONF = 'newsrebels.urls'
@@ -72,6 +86,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+
+                'social_django.context_processors.backends',  # <--
+                'social_django.context_processors.login_redirect', # <--
             ],
         },
     },

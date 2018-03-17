@@ -15,4 +15,5 @@ urlpatterns = [
 	url(r'^restricted/', views.restricted, name='restricted'),
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^accounts/', include('registration.backends.simple.urls')),
+	url(r'^oauth/', include('social_django.urls', namespace='social')), #<-- for social login
 ]

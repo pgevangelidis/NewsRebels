@@ -8,8 +8,9 @@ from datetime import datetime
 
 # Create your views here.
 def index(request):
+	show_burger = True
 	request.session.set_test_cookie()
-	response = render(request, 'rebels/index.html', )
+	response = render(request, 'rebels/index.html', {'show_burger':show_burger})
 	return response
 	#return render(request, 'rebels/index.html', )
 
@@ -71,7 +72,7 @@ def user_login(request):
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
 				login(request, user)
-				return HttpResponseRedirect(reverse('index'))
+				return HttpResponseRedirect(reverse('suggested'))
 			else:
 				# An inactive account was used - no logging in!
 				return HttpResponse("Your rebels account is disabled.")
@@ -97,20 +98,25 @@ def some_view(request):
 def restricted(request):
 	return HttpResponse("Since you're logged in, you can see this text!")
 
+
 @login_required
 def suggested(request):
-    request.session.set_test_cookie()
-    return render(request, 'rebels/suggested.html',)
+	request.session.set_test_cookie()
+	return render(request, 'rebels/suggested.html')
+
 
 @login_required
 def article(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/article.html',)
 
-@login_required
+#@login_required
 def search(request):
-    request.session.set_test_cookie()
-    return render(request, 'rebels/search.html',)
+	request.session.set_test_cookie()
+	if request.user.is_authenticated():
+		return render(request, 'rebels/search.html',)
+	else:
+		return HttpResponseRedirect(reverse('register'))
 
 @login_required
 def latest_read(request):
