@@ -1,2 +1,23 @@
 # NewsRebels
 Internet Technology project 2018, UofG
+
+pip list: (17/3/2018)
+  certifi (2018.1.18)
+  chardet (3.0.4)
+  defusedxml (0.5.0)
+  Django (1.11)
+  django-regitstration-redux (1.4)
+  idna (2.6)
+  oauthlib (2.0.6)
+  Pillow (5.0.0)
+  pip (9.0.1)
+  PyJWT (1.6.0)
+  python3-openid (3.1.0)
+  pytz (2017.3)
+  requests (2.18.4)
+  requests-oauthlib (0.8.0)
+  setuptools (28.8.0)
+  six (1.11.0)
+  social-auth-app-django (2.1.0)
+  social-auth-core (1.7.0)
+  urllib3 (1.22)
