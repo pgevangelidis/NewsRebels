@@ -30,7 +30,7 @@ SOCIAL_AUTH_TWITTER_SECRET = 'r3e463AQwwwFXHzMCatPGidi0Sqf8Muipsx6Xv2ec8Z27yqGLG
 
 # Twitter Key
 SOCIAL_AUTH_FACEBOOK_KEY = "218920218685627"
-SOCIAL_AUTH_FACEBOOK_SECRET = '7d456c3d60dc9e41a1bc4aea7ce8026f' 
+SOCIAL_AUTH_FACEBOOK_SECRET = '7d456c3d60dc9e41a1bc4aea7ce8026f'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -65,7 +65,7 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-  'rebels.backends.LoginUsingEmailAsUsernameBackend',
+  'rebels.backends.EmailOrUsernameModelBackend',
   'django.contrib.auth.backends.ModelBackend',
 
   'social_core.backends.twitter.TwitterOAuth',

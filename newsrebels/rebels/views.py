@@ -1,51 +1,60 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from rebels.forms import UserForm, UserProfileForm
+from rebels.forms import UserForm #UserProfileForm
 from datetime import datetime
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView
+
 
 # Create your views here.
 def index(request):
-	show_burger = True
-	request.session.set_test_cookie()
-	response = render(request, 'rebels/index.html', {'show_burger':show_burger})
-	return response
-	#return render(request, 'rebels/index.html', )
+	if not request.user.is_authenticated():
+		show_burger = True
+		request.session.set_test_cookie()
+		response = render(request, 'rebels/index.html', {'show_burger':show_burger})
+		return response
+	else:
+		return HttpResponseRedirect(reverse('suggested'))
 
 def about(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/about.html',)
 
 def register(request):
-	registered = False
+	if not request.user.is_authenticated():
+		registered = False
 
-	if request.method == 'POST':
-		user_form = UserForm(data=request.POST)
-		profile_form = UserProfileForm(data=request.POST)
+		if request.method == 'POST':
+			user_form = UserForm(data=request.POST)
 
-		if user_form.is_valid() and profile_form.is_valid():
-			user = user_form.save()
-			user.set_password(user.password)
-			user.save()
+			if user_form.is_valid():
+				user = user_form.save()
+				user.set_password(user.password)
+				user.save()
 
-			profile = profile_form.save(commit=False)
-			profile.user = user
+				#profile.user = user
+				registered = True
 
-			if 'picture' in request.FILES:
-				profile.picture = request.FILES['picture']
 
-			profile.save()
+				# Make the successful registration authenticated
+				username = user_form.cleaned_data.get('username')
+				password = user_form.cleaned_data.get('password')
 
-			registered = True
+				user = authenticate(request, username=username, password=password)
+				login(request, user)
+				return redirect(reverse('suggested'))
+
+			else:
+				print(user_form.errors)
 		else:
-			print(user_form.errors, profile_form.errors)
-	else:
-		user_form = UserForm()
-		profile_form = UserProfileForm()
+			user_form = UserForm()
 
-	return render(request,'rebels/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+		return render(request,'rebels/register.html', {'user_form': user_form, 'registered': registered})
+	else:
+		return HttpResponseRedirect(reverse('suggested'))
 
 def user_login(request):
 	#If the request is HTTP POST try to pull out the relevant information.
@@ -88,24 +97,20 @@ def user_login(request):
 		# blank dictionary object...
 		return render(request, 'rebels/login.html', {})
 
-def some_view(request):
-	if not request.user.is_authenticated():
-		return HttpResponse("You are logged in.")
-	else:
-		return HttpResponse("You are not logged in.")
-
-@login_required
-def restricted(request):
-	return HttpResponse("Since you're logged in, you can see this text!")
+#def some_view(request):
+#	if not request.user.is_authenticated():
+#		return HttpResponse("You are logged in.")
+#	else:
+#		return HttpResponse("You are not logged in.")
 
 
-@login_required
+@login_required(login_url='/rebels/')
 def suggested(request):
 	request.session.set_test_cookie()
 	return render(request, 'rebels/suggested.html')
 
 
-@login_required
+@login_required(login_url='/rebels/')
 def article(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/article.html',)
@@ -118,7 +123,7 @@ def search(request):
 	else:
 		return HttpResponseRedirect(reverse('register'))
 
-@login_required
+@login_required(login_url='/rebels/')
 def latest_read(request):
     request.session.set_test_cookie()
     return render(request, 'rebels/latest_read.html',)
@@ -129,7 +134,7 @@ def terms_and_conditions(request):
 
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
-@login_required
+@login_required(login_url='/rebels/')
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
@@ -163,3 +168,8 @@ def visitor_cookie_handler(request):
 	# Update/set the visits cookie
 	request.session['visits'] = visits
     # response.set_cookie('visits', visits)
+
+## Username field validation in register view, with ajax
+#class SignUpView(CreateView):
+#	template_name = 'templates/rebels/register.html'
+#	form_class = UserCreationForm
