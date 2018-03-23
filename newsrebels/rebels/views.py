@@ -3,11 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from rebels.forms import UserForm #UserProfileForm
+from rebels.forms import UserForm  #, UserProfileForm
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-
+from aylienapiclient import textapi
+import re
 
 # Create your views here.
 def index(request):
@@ -29,28 +30,31 @@ def register(request):
 
 		if request.method == 'POST':
 			user_form = UserForm(data=request.POST)
+			#profile_form = UserProfileForm(data=request.POST)
 
-			if user_form.is_valid():
+			if user_form.is_valid(): #and profile_form.is_valid():
 				user = user_form.save()
 				user.set_password(user.password)
 				user.save()
 
+				##profile = profile_form.save(commit=False)
+				##profile.user = user
+				#profile.save()
 				#profile.user = user
 				registered = True
-
-
 				# Make the successful registration authenticated
 				username = user_form.cleaned_data.get('username')
 				password = user_form.cleaned_data.get('password')
 
-				user = authenticate(request, username=username, password=password)
-				login(request, user)
+				#user = authenticate(request, username=username, password=password)
+				login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 				return redirect(reverse('suggested'))
 
 			else:
 				print(user_form.errors)
 		else:
 			user_form = UserForm()
+			#profile_form = UserProfileForm()
 
 		return render(request,'rebels/register.html', {'user_form': user_form, 'registered': registered})
 	else:
@@ -80,7 +84,7 @@ def user_login(request):
 			if user.is_active:
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
-				login(request, user)
+				login(request, user, backend='rebels.backends.EmailOrUsernameModelBackend')
 				return HttpResponseRedirect(reverse('suggested'))
 			else:
 				# An inactive account was used - no logging in!
@@ -95,7 +99,7 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		return render(request, 'rebels/login.html', {})
+		return render(request, 'rebels/index.html', {})
 
 #def some_view(request):
 #	if not request.user.is_authenticated():
@@ -112,8 +116,38 @@ def suggested(request):
 
 @login_required(login_url='/rebels/')
 def article(request):
-    request.session.set_test_cookie()
-    return render(request, 'rebels/article.html',)
+	request.session.set_test_cookie()
+	if request.method == 'GET' and 'target_url' in request.GET:
+		target_url = request.GET['target_url']
+
+		#here we are using Alyien API to extract info from pages
+		aylien_app_id = "ba5b50f4"
+		aylien_app_key = "8f80ac427e1bd4e6cadc5a153816441e"
+		client = textapi.Client(aylien_app_id , aylien_app_key)
+		extract = client.Extract({"url":target_url, "best_image": False})
+
+		print(extract)
+
+		if extract["image"] is  "":
+			img = "http://maiamthienan.org/public/images/no_image.png"
+		else:
+			img = extract["image"]
+
+		paras = re.split(r'[\r\n]+', extract["article"] )
+		paras = ['<p>{}</p>'.format(p.strip())  for p in paras]
+
+
+		return render(request,'rebels/article.html', {
+														'title': extract["title"],
+														'article_body': '\n'.join(paras),
+														"author": extract["author"] ,
+														'date': extract["publishDate"] ,
+														'link': target_url ,
+														'image':img
+													 })
+	else:
+		return render(request,'rebels/missing_article.html')
+
 
 #@login_required
 def search(request):
@@ -173,3 +207,10 @@ def visitor_cookie_handler(request):
 #class SignUpView(CreateView):
 #	template_name = 'templates/rebels/register.html'
 #	form_class = UserCreationForm
+def profile(request):
+    request.session.set_test_cookie()
+    usrName = "Stef12"
+    fName = "Stefanos"
+    lName = "Nikolaou"
+    date = "21.3.2018"
+    return render(request, 'rebels/profile.html' ,{'username': usrName, 'fname': fName, 'lname': lName , 'date': date})

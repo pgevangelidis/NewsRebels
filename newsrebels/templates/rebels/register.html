@@ -6,22 +6,114 @@
 {% endblock %}
 
 {% block body_block %}
+<link rel="stylesheet" href="{% static "css/registration.css" %}">
+
   <h1>Register for NewsRebels</h1>
   {% if registered %}
     The NewsRebel team says: <strong>thank you for registering!</strong>
-    <a href="{% url 'index' %}">Return to the homepage.</a><br />
+    <a href="{% url "index" %}">Return to the homepage.</a><br />
   {% else %}
-    The NewsRebel team says: <strong>register here!</strong><br />
+    <!--The NewsRebel team says: <strong>register here!</strong><br /-->
+    <!--
     <form id='user_form' method='post' action='{% url 'register' %}' enctype='multipart/form-data'>
 
     {% csrf_token %}
 
     <!-- Display each form -->
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
+    <!--{{ user_form.as_p }}
+    {{ profile_form.as_p }} -->
 
     <!-- Provide a button to click to submit the form -->
-      <input type="submit" name="submit" value="Register" />
-    </form>
+      <!--input type="submit" name="submit" value="Register" />
+    </form -->
+    <div class="form-style-5">
+  <form id='user_form' method="post" action='{% url 'register' %}' onsubmit="return checkForm(this)" enctype='multipart/form-data'>
+    <span id="formErrorContainer" class="error text-danger" style="display:none;" > <i class="fa fa-close" style="font-size:24px"></i> <span id="formErrorMessage"> </span></span>
+
+    {% csrf_token %}
+
+    <fieldset>
+      <legend><span class="number">1</span> New User Info</legend>
+
+      <input type="text" name="first_name" placeholder="Your First Name *" required>
+      <input type="text" name="last_name" placeholder="Your Last Name *" required>
+    </fieldset>
+    <fieldset>
+      <legend><span class="number">2</span> Important User Info</legend>
+
+      <input type="text" name="username" placeholder="Your Username *" required>
+      <input type="email" name="email" placeholder="Your Email *" required>
+      <input type="password" name="password" placeholder="Your Password *" required>
+      <input type="password" name="password2" placeholder="Repeat Password *" required>
+    </fieldset>
+    <input type="submit" name="submit" value="Register" />
+  </form>
+</div>
+
+
+
+    <script type="text/javascript">
+    //code taken from: http://www.the-art-of-web.com/javascript/validate-password/
+    function checkForm(form)  {
+    re = /^\w+$/;
+    if(!re.test(form.username.value)) {
+      $('#formErrorMessage').text("Error: Username must contain only letters, digits and underscores!")
+      $('#formErrorContainer').show();
+      return false;
+    }
+
+    re = /^[a-zA-Z]+$/;
+    if(!re.test(form.fName.value)) {
+      $('#formErrorMessage').text("Error: First Name must contain only letters!")
+      $('#formErrorContainer').show();
+      return false;
+    }
+
+    re = /^[a-zA-Z]+$/;
+    if(!re.test(form.lName.value)) {
+      $('#formErrorMessage').text("Error: Last Name must contain only letters!")
+      $('#formErrorContainer').show();
+      return false;
+    }
+
+    if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+      if(form.pwd1.value.length < 6) {
+        $('#formErrorMessage').text("Error: Password must contain at least six characters!")
+        $('#formErrorContainer').show();
+        return false;
+      }
+      if(form.pwd1.value == form.username.value) {
+        $('#formErrorMessage').text("Error: Password must be different from Username!")
+        $('#formErrorContainer').show();
+        return false;
+      }
+      re = /[0-9]/;
+      if(!re.test(form.pwd1.value)) {
+        $('#formErrorMessage').text("Error: password must contain at least one number (0-9)!")
+        $('#formErrorContainer').show();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.pwd1.value)) {
+        $('#formErrorMessage').text("Error: password must contain at least one lowercase letter (a-z)!")
+        $('#formErrorContainer').show();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.pwd1.value)) {
+        $('#formErrorMessage').text("Error: password must contain at least one uppercase letter (A-Z)!")
+        $('#formErrorContainer').show();
+        return false;
+      }
+    } else {
+      $('#formErrorMessage').text("Error: Please check that you've entered and confirmed your password!")
+      $('#formErrorContainer').show();
+      return false;
+    }
+    return true;
+    }
+    </script>
+
+
   {% endif %}
 {% endblock %}

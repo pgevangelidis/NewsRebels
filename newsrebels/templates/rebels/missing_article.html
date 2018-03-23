@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %} {% load staticfiles %} {% block title_block %} Article {% endblock %} {% block body_block %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-md-10">
+
+        <h1>Missing Article!!!</h1>
+        <p>Sorry for the inconvenience. <br />Pleaze go back and select an existing article.</p>
+      <hr>
+
+      <ul class="pager">
+        <li class="previous"><a href="{% url 'suggested' %}">&larr; Back to suggested</a></li>
+      </ul>
+
+
+
+      <hr />
+
+    </div>
+    <div class="col-md-1">
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

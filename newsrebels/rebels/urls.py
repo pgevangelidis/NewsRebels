@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^latest_read/$', views.latest_read, name='latest_read'),
     url(r'^search/$', views.search, name='search'),
 	url(r'^register/$', views.register, name='register'),
+	url(r'^profile/$', views.profile, name = 'profile'),
 	url(r'^login/$', views.user_login, name='login'),
 	url(r'^logout/$', views.user_logout, name='logout'),
 	url(r'^accounts/', include('registration.backends.simple.urls')),
