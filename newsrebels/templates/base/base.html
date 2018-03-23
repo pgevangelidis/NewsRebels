@@ -201,6 +201,11 @@
                 <ul id="login-dp" class="dropdown-menu ">
                   <li>
                     <div class="row">
+                      {% if error_message %}
+                      <div class="col-md-12" id="loginErrorMessageDisplay" >
+                      <span  class="error text-danger" style="display:block;"> <i class="fa fa-close" style="font-size:24px"></i> <span > {{error_message}}  </span></span>
+                    </div>
+                    {% endif %}
                       <div class="col-md-12">
                         Login via
                         <div class="social-buttons">

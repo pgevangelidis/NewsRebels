@@ -88,11 +88,11 @@ def user_login(request):
 				return HttpResponseRedirect(reverse('suggested'))
 			else:
 				# An inactive account was used - no logging in!
-				return HttpResponse("Your rebels account is disabled.")
+				return render(request, 'rebels/index.html' ,{'error_message': "Your rebels account is disabled!"})
 		else:
 			# Bad login details were provided. So we can't log the user in.
 			print("Invalid login details: {0}, {1}".format(username, password))
-			return HttpResponse("Invalid login details supplied.")
+			return render(request, 'rebels/index.html' ,{'error_message': "Invalid login details!"})
 
 	# The request is not a HTTP POST, so display the login form.
 	# This scenario would most likely be a HTTP GET.

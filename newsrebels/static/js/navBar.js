@@ -6,14 +6,15 @@ function getUrlParam(name) {
 }
 
 $(function() {
-  var id = getUrlParam('loginError');
-  if (id > "") {
-    // do something with the id
-      $("#login-dp").show();
-  } else {
-    // there is no id value
-    $("#login-dp").hide()
-  }
+
+
+  var error_msg = document.getElementById("loginErrorMessageDisplay").textContent;
+  console.log(error_msg);
+if (error_msg.indexOf('Invalid') >= 0 || error_msg.indexOf('disabled') >= 0){
+  $("#login-dp").show();
+}else {
+    $("#login-dp").hide();
+}
 });
 
 function moveToElement(kati) {
