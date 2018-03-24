@@ -257,7 +257,7 @@ $(function() {
   updateUsrSetForm.submit(function(e) {
     $('#formSuccessMessage').text("");
     $('#formSuccessContainer').hide();
-    
+
     e.preventDefault();
     if (checkUserUpdateSettingsForm()) { //if the elements of the form are right then proceed to update
       var csrftoken = getCookie('csrftoken');
@@ -285,24 +285,28 @@ $(function() {
           '"}',
         success: function(response2) {
           if (response2.status != 'ok') {
+            $('#formErrorMessage').text(response2.message);
+            $('#formErrorContainer').show();
             throw response2.message;
-          }
-          updateUsrSetForm.find('input[name="first_name"]').val("");
-          updateUsrSetForm.find('input[name="last_name"]').val("");
-          updateUsrSetForm.find('input[name="username"]').val("");
-          updateUsrSetForm.find('input[name="email"]').val("");
-          updateUsrSetForm.find('input[name="password"]').val("");
-          updateUsrSetForm.find('input[name="password2"]').val("");
-          $('#formErrorMessage').text("");
-          $('#formErrorContainer').hide();
+          } else {
+            updateUsrSetForm.find('input[name="first_name"]').val("");
+            updateUsrSetForm.find('input[name="last_name"]').val("");
+            updateUsrSetForm.find('input[name="username"]').val("");
+            updateUsrSetForm.find('input[name="email"]').val("");
+            updateUsrSetForm.find('input[name="password"]').val("");
+            updateUsrSetForm.find('input[name="password2"]').val("");
+            $('#formErrorMessage').text("");
+            $('#formErrorContainer').hide();
 
-          $('#formSuccessMessage').text("Update has been completed!!");
-          $('#formSuccessContainer').show();
+            $('#formSuccessMessage').text("Update has been completed!!");
+            $('#formSuccessContainer').show();
+          }
+
 
         },
         error: function(data) {
-          console.log('An error occurred.');
-          console.log(data);
+          $('#formErrorMessage').text("An error occured!");
+          $('#formErrorContainer').show();
         },
       });
     }

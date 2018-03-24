@@ -12,12 +12,14 @@ import re
 import json
 
 # A helper method
+@login_required(login_url='/rebels/')
 def get_server_side_cookie(request, cookie, default_val=None):
 	val = request.session.get(cookie)
 	if not val:
 		val = default_val
 	return val
 
+@login_required(login_url='/rebels/')
 def visitor_cookie_handler(request):
 	# Get the number of visits to the site.
 	# We use the COOKIES.get() function to obtain the visits cookie.
@@ -43,6 +45,8 @@ def visitor_cookie_handler(request):
 #class SignUpView(CreateView):
 #	template_name = 'templates/rebels/register.html'
 #	form_class = UserCreationForm
+
+@login_required(login_url='/rebels/')
 def profile(request):
     request.session.set_test_cookie()
 
@@ -114,6 +118,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 '''
+@login_required(login_url='/rebels/')
 def add_sug_rss_to_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
     response = None
@@ -145,6 +150,7 @@ def add_sug_rss_to_user(request):
         data["message"] = "this is not an ajax request"
         return JsonResponse(data)
 
+@login_required(login_url='/rebels/')
 def add_rss_to_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
     response = None
@@ -179,6 +185,7 @@ def add_rss_to_user(request):
         return JsonResponse(data)
 
 
+@login_required(login_url='/rebels/')
 def delete_rss_from_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
     response = None
@@ -210,6 +217,8 @@ def delete_rss_from_user(request):
         data["message"] = "this is not an ajax request"
         return JsonResponse(data)
 
+
+@login_required(login_url='/rebels/')
 def update_user_settings(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
     response = None
@@ -230,6 +239,12 @@ def update_user_settings(request):
                 #### -----> edw kane update ta dedomena tou xrhsth  (ama kaneis update to password elegkse oti ta duo password p erxontai tairiazoun)
 
 
+                ### an uparxei to usename h to email na epistrepseis:
+                #
+                #   data["status"] = "notOk"
+                #   data["message"] = "Username not available!"
+                #   data["message"] = "Email not available!"
+
                 data["status"] = "ok"
                 return JsonResponse(data)
             else:
@@ -246,6 +261,7 @@ def update_user_settings(request):
         return JsonResponse(data)
 
 
+@login_required(login_url='/rebels/')
 def delete_rss_from_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
     response = None
