@@ -3,7 +3,7 @@ from rebels import views
 from django.conf.urls import include
 
 from rebels import profile_views
-
+from rebels import crawler_views
 
 urlpatterns = [
 	url(r'^$', views.index, name = 'index'),
@@ -27,4 +27,8 @@ urlpatterns = [
 	url(r'^add_rss_to_user/$', profile_views.add_rss_to_user, name='add_rss_to_user'),
 	url(r'^add_sug_rss_to_user/$', profile_views.add_sug_rss_to_user, name='add_sug_rss_to_user'),
 	url(r'^update_user_settings/$', profile_views.update_user_settings, name='update_user_settings'),
+
+	#add crawler views
+    url(r'^crawl_rss_feed/$', crawler_views.crawl_rss_feeds, name='crawl_rss_feeds'),
+	url(r'^get_first_link_to_crawl/$', crawler_views.get_first_link_to_crawl, name='get_first_link_to_crawl'),
 ]

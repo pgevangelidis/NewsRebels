@@ -7,7 +7,7 @@ from rebels.forms import UserForm  #, UserProfileForm
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-from aylienapiclient import textapi
+
 import re
 import json
 
