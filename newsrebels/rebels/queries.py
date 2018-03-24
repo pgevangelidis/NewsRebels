@@ -47,7 +47,7 @@ def RSSExists(rssId):
 # The requirement is that the context_dict must contain the following attributes:
 # link, title, description, date
 
-## 
+##
 def InsertRSS(context_dict):
     # RSS table has 4 main attributes plus the is_deleted attribute which will be default==1
     # I will assign all values to parameters before the query

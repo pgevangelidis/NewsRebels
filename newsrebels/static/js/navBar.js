@@ -1,4 +1,3 @@
-
 function getUrlParam(name) {
   //https://www.sitepoint.com/community/t/how-to-check-if-url-parameter-is-empty-or-not/117524/2
   var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -6,15 +5,15 @@ function getUrlParam(name) {
 }
 
 $(function() {
-
-
-  var error_msg = document.getElementById("loginErrorMessageDisplay").textContent;
-  console.log(error_msg);
-if (error_msg.indexOf('Invalid') >= 0 || error_msg.indexOf('disabled') >= 0){
-  $("#login-dp").show();
-}else {
-    $("#login-dp").hide();
-}
+  var error_msg_div_cont = document.getElementById("loginErrorMessageDisplay");
+  if (error_msg_div_cont != null) {
+    var error_msg = error_msg_div_cont.textContent
+    if (error_msg.indexOf('Invalid') >= 0 || error_msg.indexOf('disabled') >= 0) {
+      $("#login-dp").show();
+    } else {
+      $("#login-dp").hide();
+    }
+  }
 });
 
 function moveToElement(kati) {

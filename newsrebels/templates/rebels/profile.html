@@ -33,80 +33,25 @@
 				<div class="tab-pane active" id="home">
 
 					<script>
-						var data = [
-						{
-							rss_number: "1",
-							rss_url: "https://www.youtube.com/watch?v=I2XfVml6o24&list=RDyuFI5KSPAt4&index=15",
-							rss_name: "kati"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "3",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "4",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "5",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "6",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						}];
+						var data = {{ data | safe	}};
 
-						var data_sug = [
-						{
-							rss_number: "1",
-							rss_url: "https://www.youtube.com/watch?v=I2XfVml6o24&list=RDyuFI5KSPAt4&index=15",
-							rss_name: "asdasdasdasdasdasd"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						},
-						{
-							rss_number: "2",
-							rss_url: "https://www.youtube.c",
-							rss_name: "kati2"
-						}];
+						var data_sug = {{sug_data | safe	}};
 					</script>
-					<form class="" action="index.html" method="post">
+					<form id="add_a_new_rss_to_a_user" action="{% url 'add_rss_to_user' %}" method="post">
+						{% csrf_token %}
+
 						<div class="col-xs-6">
 							<h4>Add a RSS URL:</h4>
+							<div class="col-12">
+								<span id="addRssFormErrorContainer" class="error text-danger" style="display:none;"> <i class="fa fa-close" style="font-size:24px"></i> <span id="AddRssFormErrorMessage">  </span></span>
+							</div>
 							<table>
 								<tr>
 									<td>
-										<input name="add_url" class="form-control" id="add_rss_url" placeholder="add a new rss url to follow" type="text">
+										<input name="add_url" class="form-control" style="width:250px" id="add_rss_url" placeholder="add a new rss url to follow" type="text">
 									</td>
 									<td>
-										<a class="btn btn-success float-right"><span class="glyphicon glyphicon-plus"></span></a>
+										<button type="submit" class="btn btn-success float-right"><span class="glyphicon glyphicon-plus"></span></button>
 									</td>
 								</tr>
 							</table>
@@ -155,99 +100,14 @@
 				<!--/tab-pane-->
 				<div class="tab-pane" id="settings">
 
-
-
-
-					<script type="text/javascript">
-						//code taken from: http://www.the-art-of-web.com/javascript/validate-password/
-						function checkForm(form)
-						{
-							re = /^\w+$/;
-							if (form.username.value != "" && !re.test(form.username.value))
-							{
-								$('#formErrorMessage').text("Error: Username must contain only letters, digits and underscores!")
-								$('#formErrorContainer').show();
-								return false;
-							}
-
-							re = /^[a-zA-Z]+$/;
-							if (form.first_name.value != "" && !re.test(form.first_name.value))
-							{
-								$('#formErrorMessage').text("Error: First Name must contain only letters!")
-								$('#formErrorContainer').show();
-								return false;
-							}
-
-							re = /^[a-zA-Z]+$/;
-							if (form.last_name.value != "" && !re.test(form.last_name.value))
-							{
-								$('#formErrorMessage').text("Error: Last Name must contain only letters!")
-								$('#formErrorContainer').show();
-								return false;
-							}
-							if (form.password.value != "")
-							{
-								if (form.password.value == form.password2.value)
-								{
-									if (form.password.value.length < 6)
-									{
-										$('#formErrorMessage').text("Error: Password must contain at least six characters!")
-										$('#formErrorContainer').show();
-										return false;
-									}
-									if (form.password.value == form.username.value)
-									{
-										$('#formErrorMessage').text("Error: Password must be different from Username!")
-										$('#formErrorContainer').show();
-										return false;
-									}
-									re = /[0-9]/;
-									if (!re.test(form.password.value))
-									{
-										$('#formErrorMessage').text("Error: password must contain at least one number (0-9)!")
-										$('#formErrorContainer').show();
-										return false;
-									}
-									re = /[a-z]/;
-									if (!re.test(form.password.value))
-									{
-										$('#formErrorMessage').text("Error: password must contain at least one lowercase letter (a-z)!")
-										$('#formErrorContainer').show();
-										return false;
-									}
-									re = /[A-Z]/;
-									if (!re.test(form.password.value))
-									{
-										$('#formErrorMessage').text("Error: password must contain at least one uppercase letter (A-Z)!")
-										$('#formErrorContainer').show();
-										return false;
-									}
-								}
-								else
-								{
-									$('#formErrorMessage').text("Error: Please check that you've entered and confirmed your password!")
-									$('#formErrorContainer').show();
-									return false;
-								}
-							}
-
-							if (form.first_name.value == "" && form.last_name.value == "" && form.username.value == "" && form.email.value == "" && form.password.value == "")
-							{
-								$('#formErrorMessage').text("Please enter a value to an input to update it, before you submit this form!!!");
-								$('#formErrorContainer').show();
-								return false;
-							}
-							return true;
-						}
-					</script>
-
-
 					<hr>
-					<form class="form" id="registrationForm" onsubmit="return checkForm(this)" action="##" method="post">
+					<form class="form" id="update_user_settings" onsubmit="return checkUserUpdateSettingsForm()" action="{% url 'update_user_settings' %}" method="post">
 						<div class="form-group">
 							<div class="col-12">
 								<span id="formErrorContainer" class="error text-danger" style="display:none;"> <i class="fa fa-close" style="font-size:24px"></i> <span id="formErrorMessage"> </span></span>
+								<span id="formSuccessContainer" class="success text-success" style="display:none;"> <i class="fa fa-check" style="font-size:24px"></i> <span id="formSuccessMessage"> </span></span>
 							</div>
+							<br />
 							<div class="col-xs-6">
 								<label for="first_name"><h4>First name</h4></label>
 								<input name="first_name" title="enter your first name if any." class="form-control" id="first_name" placeholder="first name" type="text">
