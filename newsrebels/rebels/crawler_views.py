@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from rebels.crawler_queries import RSStoCrawl
 from rebels.forms import UserForm  #, UserProfileForm
 from datetime import datetime
 from django.core.urlresolvers import reverse
@@ -30,17 +31,18 @@ def get_first_link_to_crawl(request):
         if request.method == 'POST':
             #print(request.body)
             response = json.loads(request.body)
-            print(response["getLink"])
+            print("Check fr crawl: %s", response["getLink"])
             if response:
 
                 ### Pros Paulo
+                rss_toCrawl = RSStoCrawl(response["getLink"])
                 ### epestrepse apo th bash to rss p exei ton pio polu kairo na ginei crawled
                 ### epishs ama exei ginei crawled thn teleutaia wra mh to ksanakaneis
                 ### kai apla epestrepse data["status"] = notOk
 
-                data["link"] = "http://rss.cnn.com/rss/edition_golf.rss"
+                data["link"] = rss_toCrawl[0]
 
-                data["status"] = "ok"
+                data["status"] = rss_toCrawl[1]
 
                 return JsonResponse(data)
             else:
@@ -75,6 +77,7 @@ def crawl_rss_feeds(request):
                     print(ele["title"])
                     print(remove_tags(ele["description"]) )
                     print(ele["link"])
+                    print(ele["thumbnail"])
                     print("\n")
 
 

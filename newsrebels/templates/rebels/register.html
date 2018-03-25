@@ -13,19 +13,7 @@
     The NewsRebel team says: <strong>thank you for registering!</strong>
     <a href="{% url "index" %}">Return to the homepage.</a><br />
   {% else %}
-    <!--The NewsRebel team says: <strong>register here!</strong><br /-->
-    <!--
-    <form id='user_form' method='post' action='{% url 'register' %}' enctype='multipart/form-data'>
 
-    {% csrf_token %}
-
-    <!-- Display each form -->
-    <!--{{ user_form.as_p }}
-    {{ profile_form.as_p }} -->
-
-    <!-- Provide a button to click to submit the form -->
-      <!--input type="submit" name="submit" value="Register" />
-    </form -->
     <div class="form-style-5">
   <form id='user_form' method="post" action='{% url 'register' %}' onsubmit="return checkForm(this)" enctype='multipart/form-data'>
     <span id="formErrorContainer" class="error text-danger" style="display:none;" > <i class="fa fa-close" style="font-size:24px"></i> <span id="formErrorMessage"> </span></span>

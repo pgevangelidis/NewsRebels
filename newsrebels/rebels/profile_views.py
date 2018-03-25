@@ -7,7 +7,7 @@ from rebels.forms import UserForm  #, UserProfileForm
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-
+from rebels.queries import UserDetails, UserRSS, SuggestedRSS, DeleteRSSfromList, AddSuggestedRss, AddNewRSS, UpdateUserDetails
 import re
 import json
 
@@ -48,68 +48,25 @@ def visitor_cookie_handler(request):
 
 @login_required(login_url='/rebels/')
 def profile(request):
-    request.session.set_test_cookie()
+	request.session.set_test_cookie()
 
-    #### PROS paulo:
-    #### -----> edw na kaneis load ta dedomena apo th vash
+	#### PROS paulo:
+	if request.user.is_authenticated():
+		user_id = request.user.id
+		user_details = UserDetails(user_id)
+		#### -----> edw na kaneis load ta dedomena apo th vash
+		usrName = user_details[0]
+		fName = user_details[1]
+		lName = user_details[2]
+		date = user_details[4]
 
-    usrName = "Stef12"
-    fName = "Stefanos"
-    lName = "Nikolaou"
-    date = "21.3.2018"
-    data = [
-	{
-		"rss_url": "https://www.youtube.com/watch?v=I2XfVml6o24&list=RDyuFI5KSPAt4&index=15",
-		"rss_name": "users rss url 1"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	}]
+		user_rssList = UserRSS(user_id)
+		user_suggestedList = SuggestedRSS(user_id)
 
-    sug_data = [
-	{
-		"rss_url": "https://www.sitepoint.com/community/t/adding-item-to-array-in-json/8361",
-		"rss_name": "suggested rss url 1"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	},
-	{
-		"rss_url": "https://www.youtube.c",
-		"rss_name": "kati2"
-	}]
-    return render(request, 'rebels/profile.html' ,{'username': usrName, 'fname': fName, 'lname': lName , 'date': date , 'data' : data , 'sug_data': sug_data})
+		data = user_rssList
+		sug_data = user_suggestedList
 
+	return render(request, 'rebels/profile.html', {'username': usrName, 'fname': fName, 'lname': lName , 'date': date , 'data' : data , 'sug_data': sug_data })
 
 from django.http import JsonResponse
 
@@ -121,144 +78,149 @@ from django.views.decorators.csrf import csrf_exempt
 @login_required(login_url='/rebels/')
 def add_sug_rss_to_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
-    response = None
-    data = {}
-    print(request)
-    if request.is_ajax():
-        if request.method == 'POST':
-            #print(request.body)
-            response = json.loads(request.body)
-            print("the suggested url for add is: " ,  response["sug_url_to_add"])
-            if response:
-                    #### PROS paulo:
-                    #### -----> edw na peraseis ta suggested sth bash prwta omws elegkse oti autos o user den exei hdh auto to rss
-                    #### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
+	response = None
+	data = {}
+	print(request)
+	if request.is_ajax():
+		if request.method == 'POST':
+			#print(request.body)
+			response = json.loads(request.body)
+			print("the suggested url for add is: " ,  response["sug_url_to_add"])
+			if response:
+				#### PROS paulo:
+				#### -----> edw na peraseis ta suggested sth bash prwta omws elegkse oti autos o user den exei hdh auto to rss
+				AddSuggestedRss(request, response["sug_url_to_add"])
+				#### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
 
-                data["status"] = "ok"
+				data["status"] = "ok"
 
-                return JsonResponse(data)
-            else:
-                data["status"] = "notOk"
-                data["message"] = "the response was empty"
-                return JsonResponse(data)
-        else:
-            data["status"] = "notOk"
-            data["message"] = "this is not a get method, post needed"
-            return JsonResponse(data)
-    else:
-        data["status"] = "notOk"
-        data["message"] = "this is not an ajax request"
-        return JsonResponse(data)
+				return JsonResponse(data)
+			else:
+				data["status"] = "notOk"
+				data["message"] = "the response was empty"
+				return JsonResponse(data)
+		else:
+			data["status"] = "notOk"
+			data["message"] = "this is not a get method, post needed"
+			return JsonResponse(data)
+	else:
+		data["status"] = "notOk"
+		data["message"] = "this is not an ajax request"
+		return JsonResponse(data)
 
 @login_required(login_url='/rebels/')
 def add_rss_to_user(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
-    response = None
-    data = {}
-    print(request)
-    if request.is_ajax():
-        if request.method == 'POST':
-            print(request.body)
-            response = json.loads(request.body)
-            print("\n\nthe new rss url to be added is: " , response["add_url"])
-            print("the new rss title to be added is: " , response["rss_title"])
-            print("the new rss description to be added is: " , response["rss_desc"])
-            print("\n\n")
-            if response:
-                    #### PROS paulo:
-                    #### -----> edw na peraseis to rss sth bash prwta omws elegkse oti autos o user den exei hdh auto to rss
-                    #### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
+	response = None
+	data = {}
+	print(request)
+	if request.is_ajax():
+		if request.method == 'POST':
+			print(request.body)
+			response = json.loads(request.body)
+			print("\n\nthe new rss url to be added is: " , response["add_url"])
+			print("the new rss title to be added is: " , response["rss_title"])
+			print("the new rss description to be added is: " , response["rss_desc"])
+			print("\n\n")
+			if response:
+				#### PROS paulo:
+				#### -----> edw na peraseis to rss sth bash prwta omws elegkse oti autos o user den exei hdh auto to rss
+				AddNewRSS(request, response)
+				#### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
 
-                data["status"] = "ok"
-                return JsonResponse(data)
-            else:
-                data["status"] = "notOk"
-                data["message"] = "the response was empty"
-                return JsonResponse(data)
-        else:
-            data["status"] = "notOk"
-            data["message"] = "this is not a get method, post needed"
-            return JsonResponse(data)
-    else:
-        data["status"] = "notOk"
-        data["message"] = "this is not an ajax request"
-        return JsonResponse(data)
+				data["status"] = "ok"
+				return JsonResponse(data)
+			else:
+				data["status"] = "notOk"
+				data["message"] = "the response was empty"
+				return JsonResponse(data)
+		else:
+			data["status"] = "notOk"
+			data["message"] = "this is not a get method, post needed"
+			return JsonResponse(data)
+	else:
+		data["status"] = "notOk"
+		data["message"] = "this is not an ajax request"
+		return JsonResponse(data)
 
 
 @login_required(login_url='/rebels/')
 def delete_rss_from_user(request):
-    #https://docs.djangoproject.com/en/1.9/ref/csrf/
-    response = None
-    data = {}
-    print(request)
-    if request.is_ajax():
-        if request.method == 'POST':
-            #print(request.body)
-            response = json.loads(request.body)
-            print("the url for delete is: " ,  response["url_to_delete"])
-            if response:
-                    #### PROS paulo:
-                    #### -----> edw na diegrapse to rss apo th  bash (isDeleted = numOfDelete) prwta omws elegkse oti autos o user den exei hdh auto to rss
-                    #### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
+	#https://docs.djangoproject.com/en/1.9/ref/csrf/
+	response = None
+	data = {}
+	print(request)
+	if request.is_ajax():
+		if request.method == 'POST' and request.user.is_authenticated():
+			#print(request.body)
+			response = json.loads(request.body)
+			print("the url for delete is: " ,  response["url_to_delete"])
 
+			if response:
+				#### PROS paulo:
+				#### -----> edw na diegrapse to rss apo th  bash (isDeleted = numOfDelete) prwta omws elegkse oti autos o user den exei hdh auto to rss
+				DeleteRSSfromList(request, response["url_to_delete"])
+				#### -----> (elegkse kai oti de tha erthoun apo th javascript parapanw apo ena (se periptwsh epitheshs))
 
-                data["status"] = "ok"
-                return JsonResponse(data)
-            else:
-                data["status"] = "notOk"
-                data["message"] = "the response was empty"
-                return JsonResponse(data)
-        else:
-            data["status"] = "notOk"
-            data["message"] = "this is not a get method, post needed"
-            return JsonResponse(data)
-    else:
-        data["status"] = "notOk"
-        data["message"] = "this is not an ajax request"
-        return JsonResponse(data)
+				data["status"] = "ok"
+				return JsonResponse(data)
+			else:
+				data["status"] = "notOk"
+				data["message"] = "the response was empty"
+				return JsonResponse(data)
+		else:
+			data["status"] = "notOk"
+			data["message"] = "this is not a get method, post needed"
+			return JsonResponse(data)
+	else:
+		data["status"] = "notOk"
+		data["message"] = "this is not an ajax request"
+		return JsonResponse(data)
 
 
 @login_required(login_url='/rebels/')
 def update_user_settings(request):
     #https://docs.djangoproject.com/en/1.9/ref/csrf/
-    response = None
-    data = {}
-    print(request)
-    if request.is_ajax():
-        if request.method == 'POST':
-            print(request.body)
-            response = json.loads(request.body)
-            print("\n\nthe user's first name to be updated is: " , response["first_name"])
-            print("the user's last name to be updated is: " , response["last_name"])
-            print("the user's username to be updated is: " , response["username"])
-            print("the user's email to be updated is: " , response["email"])
-            print("the user's password to be updated is: " , response["password"])
-            print("\n\n")
-            if response:
-                #### PROS paulo:
-                #### -----> edw kane update ta dedomena tou xrhsth  (ama kaneis update to password elegkse oti ta duo password p erxontai tairiazoun)
+	response = None
+	data = {}
+	print(request)
+	if request.is_ajax():
+		if request.method == 'POST':
+			print(request.body)
+			response = json.loads(request.body)
+			print("\n\nthe user's first name to be updated is: " , response["first_name"])
+			print("the user's last name to be updated is: " , response["last_name"])
+			print("the user's username to be updated is: " , response["username"])
+			print("the user's email to be updated is: " , response["email"])
+			print("the user's password to be updated is: " , response["password"])
+			print("\n\n")
+			if response:
+				#### PROS paulo:
+				#### -----> edw kane update ta dedomena tou xrhsth  (ama kaneis update to password elegkse oti ta duo password p erxontai tairiazoun)
+				flag = UpdateUserDetails(request, response)
 
-
-                ### an uparxei to usename h to email na epistrepseis:
-                #
-                #   data["status"] = "notOk"
-                #   data["message"] = "Username not available!"
-                #   data["message"] = "Email not available!"
-
-                data["status"] = "ok"
-                return JsonResponse(data)
-            else:
-                data["status"] = "notOk"
-                data["message"] = "the response was empty"
-                return JsonResponse(data)
-        else:
-            data["status"] = "notOk"
-            data["message"] = "this is not a get method, post needed"
-            return JsonResponse(data)
-    else:
-        data["status"] = "notOk"
-        data["message"] = "this is not an ajax request"
-        return JsonResponse(data)
+				### an uparxei to usename h to email na epistrepseis:
+				if flag==1:
+					data["status"] = "notOk"
+					data["message"] = "Username not available! Someone else has this Username."
+				elif flag==2:
+					data["status"] = "notOk"
+					data["message"] = "Email not available! Someone else has this Email."
+				else:
+					data["status"] = "ok"
+				return JsonResponse(data)
+			else:
+				data["status"] = "notOk"
+				data["message"] = "the response was empty"
+				return JsonResponse(data)
+		else:
+			data["status"] = "notOk"
+			data["message"] = "this is not a get method, post needed"
+			return JsonResponse(data)
+	else:
+		data["status"] = "notOk"
+		data["message"] = "this is not an ajax request"
+		return JsonResponse(data)
 
 
 @login_required(login_url='/rebels/')

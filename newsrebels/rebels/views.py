@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from rebels.models import UserProfile
 from rebels.forms import UserForm  #, UserProfileForm
 from datetime import datetime
+from rebels.queries import CheckForUniqueEmail
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from aylienapiclient import textapi
@@ -35,26 +37,34 @@ def register(request):
 		if request.method == 'POST':
 			user_form = UserForm(data=request.POST)
 			#profile_form = UserProfileForm(data=request.POST)
+			## I have to be sure that the user cannot register with the same email
+
 
 			if user_form.is_valid(): #and profile_form.is_valid():
-				user = user_form.save()
-				user.set_password(user.password)
-				user.save()
+				email = user_form.cleaned_data.get('email')
+				#print("email from form: ")
+				#print(email)
+				flag = CheckForUniqueEmail(email)
+				#print("flag: "+str(flag))
 
-				##profile = profile_form.save(commit=False)
-				##profile.user = user
-				#profile.save()
-				#profile.user = user
-				registered = True
-				# Make the successful registration authenticated
-				username = user_form.cleaned_data.get('username')
-				password = user_form.cleaned_data.get('password')
+				if not flag:
+					user_form = UserForm()
+					return render(request,'rebels/register.html', {'user_form': user_form, 'registered': registered})
+				else:
+					user = user_form.save()
+					user.set_password(user.password)
+					user.save()
+					registered = True
+					# Make the successful registration authenticated
+					username = user_form.cleaned_data.get('username')
+					password = user_form.cleaned_data.get('password')
 
-				#user = authenticate(request, username=username, password=password)
-				login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-				return redirect(reverse('suggested'))
+					#user = authenticate(request, username=username, password=password)
+					login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+					return redirect(reverse('suggested'))
 
 			else:
+				context_dict = {'boldmessage' : "A user with the same credentials already exists. Please change your credential."}
 				print(user_form.errors)
 		else:
 			user_form = UserForm()

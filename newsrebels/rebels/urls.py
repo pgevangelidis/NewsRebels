@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from rebels import views
 from django.conf.urls import include
+from registration.forms import RegistrationFormUniqueEmail
+from registration.backends.default.views import RegistrationView
 
 from rebels import profile_views
 from rebels import crawler_views
