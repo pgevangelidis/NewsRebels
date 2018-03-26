@@ -123,21 +123,20 @@
     <article class="search-result row">
       <div class="hiddenFieldWithTheArticlesURL" style="display:none">{% templatetag openvariable %}source{% templatetag closevariable %}</div>
       <div class="col-xs-12 col-sm-12 col-md-3">
-        <a href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )" title="{% templatetag openvariable %}title{% templatetag closevariable %}"
+        <a href="{% templatetag openvariable %}source{% templatetag closevariable %}" target="_blank" title="{% templatetag openvariable %}title{% templatetag closevariable %}"
           class="thumbnail"><img src="{% templatetag openvariable %}image{% templatetag closevariable %}"  /></a>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-2">
         <ul class="meta-search">
           <li><i class="glyphicon glyphicon-calendar"></i> <span>{% templatetag openvariable %}date{% templatetag closevariable %}</span></li>
-          <li><i class="glyphicon glyphicon-file"></i> <span> <a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , '{% templatetag openvariable %}source{% templatetag closevariable %}' )">  source </a> </span></li>
+          <li><i class="glyphicon glyphicon-file"></i> <span> <a  href="{% templatetag openvariable %}source{% templatetag closevariable %}" target="_blank" >  source </a> </span></li>
         </ul>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-        <h3><a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )"  >{% templatetag openvariable %}title{% templatetag closevariable %}</a></h3>
+        <h3><a  href="{% templatetag openvariable %}source{% templatetag closevariable %}" target="_blank"  >{% templatetag openvariable %}title{% templatetag closevariable %}</a></h3>
         <p>{% templatetag openvariable %}description{% templatetag closevariable %}</p>
 
-        <a href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )" class="btn btn-primary btn-outline btn-sm">Read More.</a>
-        <a href="javascript:void(0)" onclick="javascript:read_more_btn(this , '{% templatetag openvariable %}source{% templatetag closevariable %}' ) " class="btn btn-primary btn-outline btn-sm">Read it from the provider.</a>
+      <a href="{% templatetag openvariable %}source{% templatetag closevariable %}" target="_blank"  class="btn btn-primary btn-outline btn-sm">Read it from the provider.</a>
       </div>
     </article>
 

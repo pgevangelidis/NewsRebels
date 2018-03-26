@@ -43,7 +43,7 @@ def latest_read_load_more_articles(request):
                 print("the next are the urls that are already loaded and you should not retrieve them from the base")
                 for ele in response["articles"]:
                     print("url: " , ele["url"])
-                    loaded_data = loaded_data+1
+                    loaded_data = loaded_data + 1
 
 
                 latestArticles_dict = LatestReadArticles(request,loaded_data)
