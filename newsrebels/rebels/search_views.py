@@ -38,7 +38,7 @@ def search_for_relevant_articles(request):
 
 
 				### Pros Paulo
-				allArticles_dict = UserAllArticles(request,20)
+				allArticles_dict = UserAllArticlesForSearch(request,20)
 				### fortwse ola ta arthra p exei o xrhsths
 				#print(len(allArticles_dict))
 				json_articles = json.dumps(return_indexs_of_the_most_relevant_articles({ "articles": allArticles_dict } ,  response["query"]  ), cls=DjangoJSONEncoder)

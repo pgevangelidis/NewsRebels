@@ -132,7 +132,7 @@ def CrawledRSSFeeds(response, rss_url):
 
 ################# Function for Stefanos ############################
 #### This query returns all the articles of the user RSS #######
-def UserAllArticles(request, loaded_data):
+def UserAllArticlesForSearch(request, loaded_data):
     if request.user.is_authenticated():
         try:
             user_id=request.user.id
@@ -141,6 +141,35 @@ def UserAllArticles(request, loaded_data):
                 con = lite.connect(DB_PATH)
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_articlerss ON rebels_article.articleId=rebels_articlerss.articleId_id INNER JOIN rebels_userrss ON rebels_articlerss.rssId_id=rebels_userrss.rssId_id WHERE userId_id=%s ", [user_id])
+                    allArticles = cursor.fetchall()
+
+                    for ar in allArticles:
+                        allArticles_dict.append({"image" : ar[0], "title" : ar[1], "description" : ar[2], "source" : ar[3], "date" : ar[4]})
+
+                loaded_data = loaded_data + 10
+                con.commit()
+            except Exception as e:
+                print("Error: ", e.args[0])
+            finally:
+                if con:
+                    con.close()
+
+        except TypeError:
+            pass
+        return allArticles_dict
+
+
+################# Function for Stefanos #######################################
+#### This query returns the articles of the user RSS  bassed on a limit #######
+def UserAllArticles(request, loaded_data):
+    if request.user.is_authenticated():
+        try:
+            user_id=request.user.id
+            allArticles_dict = []
+            try:
+                con = lite.connect(DB_PATH)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_articlerss ON rebels_article.articleId=rebels_articlerss.articleId_id INNER JOIN rebels_userrss ON rebels_articlerss.rssId_id=rebels_userrss.rssId_id WHERE userId_id=%s LIMIT %s, 10", [user_id, loaded_data])
                     allArticles = cursor.fetchall()
 
                     for ar in allArticles:
