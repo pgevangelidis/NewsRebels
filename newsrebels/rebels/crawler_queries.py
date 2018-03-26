@@ -167,9 +167,9 @@ def LatestReadArticles(request,loaded_data):
             try:
                 con = lite.connect(DB_PATH)
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_hasread ON rebels_article.articleId=rebels_hasread.articleId_id WHERE userId_id=%s AND has_read=1 LIMIT %s, 10 ORDER BY date DESC", [user_id, loaded_data])
+                    cursor.execute("SELECT DISTINCT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_hasread ON rebels_article.articleId=rebels_hasread.articleId_id WHERE userId_id=%s AND has_read>0 LIMIT %s, 10", [user_id, loaded_data])
                     allArticles = cursor.fetchall()
-
+                    print("user id is: ",user_id)
                     for ar in allArticles:
                         latestRead_dict.append({"image" : ar[0], "title" : ar[1], "description" : ar[2], "source" : ar[3], "date" : ar[4]})
 
@@ -190,16 +190,18 @@ def AddArticleUser(request,url):
     if request.user.is_authenticated():
         try:
             h=0
-            url = url.split('http://localhost:8000/rebels/article/?target_url=')
-            print("the new url is: ", url[1])
+            if "?target_url=" in url:
+                url = url.split('target_url=')[1]
+
+            print("the new url is: ", url)
             user_id=request.user.id
             try:
                 con = lite.connect(DB_PATH)
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT articleId FROM rebels_article WHERE url=%s", [url[1]])
+                    cursor.execute("SELECT articleId FROM rebels_article WHERE url=%s", [url])
                     artId = cursor.fetchone()
-                    print("is artId still none: ",)
-                    cursor.execute("SELECT has_read FROM rebels_hasread WHERE userId_id=%s AND articleId_id=%s", [user_id, url[1]])
+                    print("is artId still none: ", artId)
+                    cursor.execute("SELECT has_read FROM rebels_hasread WHERE userId_id=%s AND articleId_id=%s", [user_id, artId[0]])
                     hr_o = cursor.fetchone()
 
                     if hr_o is None:
@@ -210,8 +212,12 @@ def AddArticleUser(request,url):
                         print("is not none")
 
                     read_date = datetime.now()
-                    cursor.execute("INSERT INTO rebels_hasread (userId_id, articleId_id, has_read, has_read_date) VALUES (%s, %s, %s, %s) ", [user_id, artId[0], hr, read_date])
-
+                    if  artId[0] > 0:
+                        cursor.execute("INSERT INTO rebels_hasread (userId_id, articleId_id, has_read, has_read_date) VALUES (%s, %s, %s, %s) ", [user_id, artId[0], hr, read_date])
+                        print("Article has been added to User Has Read.")
+                    else:
+                        cursor.execute("UPDATE rebels_hasread SET has_read=%s WHERE articleId_id=%s AND userId_id=%s", [hr, artId_id[0], user_id])
+                        print("Article has been updated to User Has Read.")
                 con.commit()
             except Exception as e:
                 print("Error: ", e.args[0])
