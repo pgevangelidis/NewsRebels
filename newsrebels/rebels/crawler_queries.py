@@ -140,7 +140,7 @@ def UserAllArticles(request, loaded_data):
             try:
                 con = lite.connect(DB_PATH)
                 with connection.cursor() as cursor:
-                    cursor.execute("SELECT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_articlerss ON rebels_article.articleId=rebels_articlerss.articleId_id INNER JOIN rebels_userrss ON rebels_articlerss.rssId_id=rebels_userrss.rssId_id WHERE userId_id=%s LIMIT %s, 10", [user_id, loaded_data])
+                    cursor.execute("SELECT thumbnail, title, description, url, date FROM rebels_article INNER JOIN rebels_articlerss ON rebels_article.articleId=rebels_articlerss.articleId_id INNER JOIN rebels_userrss ON rebels_articlerss.rssId_id=rebels_userrss.rssId_id WHERE userId_id=%s ", [user_id])
                     allArticles = cursor.fetchall()
 
                     for ar in allArticles:

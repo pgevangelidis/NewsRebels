@@ -14,6 +14,7 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse
 
+from rebels.IR_function import return_indexs_of_the_most_relevant_articles
 
 @login_required(login_url='/rebels/')
 def search(request):
@@ -39,8 +40,8 @@ def search_for_relevant_articles(request):
 				### Pros Paulo
 				allArticles_dict = UserAllArticles(request,20)
 				### fortwse ola ta arthra p exei o xrhsths
-
-				json_articles = json.dumps({ "articles": allArticles_dict }, cls=DjangoJSONEncoder)
+				#print(len(allArticles_dict))
+				json_articles = json.dumps(return_indexs_of_the_most_relevant_articles({ "articles": allArticles_dict } ,  response["query"]  ), cls=DjangoJSONEncoder)
 
 				data["json_articles"] = json_articles
 				data["status"] = "ok"
