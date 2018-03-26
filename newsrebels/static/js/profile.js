@@ -75,7 +75,6 @@ function checkUserUpdateSettingsForm() {
   return true;
 }
 
-
 //https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
 function isURL(str) {
   return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
@@ -123,7 +122,7 @@ function deleteRssForThisUser(url, callback) {
   });
   $.ajax({
     async: true,
-    url: 'http://localhost:8000/rebels/delete_rss_from_user/',
+    url: '/rebels/delete_rss_from_user/',
     method: 'POST',
     type: "POST",
     contentType: "application/json; charset=utf-8",
@@ -153,7 +152,7 @@ function addSugRssToThisUser(url, callback) {
   });
   $.ajax({
     async: true,
-    url: 'http://localhost:8000/rebels/add_sug_rss_to_user/',
+    url: '/rebels/add_sug_rss_to_user/',
     method: 'POST',
     type: "POST",
     contentType: "application/json; charset=utf-8",
@@ -176,7 +175,8 @@ $(function() {
   addRssForm.submit(function(e) {
 
     e.preventDefault();
-
+    e.stopImmediatePropagation();
+    
     var csrftoken = getCookie('csrftoken');
     $.ajaxSetup({
       beforeSend: function(xhr, settings) {

@@ -89,8 +89,6 @@ def UserArticles(request):
                     # This list contains the RSS title and Link of the user RSS.
                     user_articleList = cursor.fetchall()
 
-
-
                 con.commit()
             except Exception as e:
                 print("Error: ", e.args[0])
@@ -163,23 +161,24 @@ def SuggestedRSS(user_id):
 ######### This section is for the is_deleted param ######################
 def ArticleExists(articleId):
     with connection.cursor() as cursor:
-        cursor.execution("UPDATE rebels_article SET is_deleted=3 WHERE rebels_article.id=articleId")
+        cursor.execute("UPDATE rebels_article SET is_deleted=3 WHERE rebels_article.id=articleId")
         return
 
 def DeleteRSSfromList(request, rss_url):
     if request.user.is_authenticated():
         # bring the user's rss id
         try:
-            use_id = request.user.id
+            user_id = request.user.id
             try:
                 con = lite.connect(DB_PATH)
-
+                print("This is the delete RSS query.")
                 with connection.cursor() as cursor:
                     cursor.execute("SELECT rssId FROM rebels_rss WHERE link=%s", [rss_url])
                     # This list contains the RSS title and Link of the user RSS.
                     rss_id = cursor.fetchone()
+                    print("the userId and the rssId is: %s %s", [rss_id[0], user_id])
 
-                    cursor.execute("UPDATE rebels_userrss SET is_deleted=3 WHERE rssId_id=%s AND userId_id=%s", [rss_id], [user_id])
+                    cursor.execute("DELETE FROM rebels_userrss WHERE rssId_id=%s AND userId_id=%s", [rss_id[0], user_id])
 
                 con.commit()
 
@@ -200,7 +199,8 @@ def AddSuggestedRss(request, rss_url):
     if request.user.is_authenticated():
         # bring the user's rss id
         try:
-            use_id = request.user.id
+            user_id = request.user.id
+            print("the user id is: %s", user_id)
             try:
                 con = lite.connect(DB_PATH)
 
@@ -208,13 +208,15 @@ def AddSuggestedRss(request, rss_url):
                     cursor.execute("SELECT rssId FROM rebels_rss WHERE link=%s", [rss_url])
                     # This list contains the RSS title and Link of the user RSS.
                     rss_id = cursor.fetchone()
+                    print("rss_id to add is: %s", rss_id[0])
                     # check if RSS exists
-                    cursor.execute("SELECT is_deleted FROM rebels_userrss WHERE rssId_id=%s AND userId_id=%s", [rss_id], [user_id])
+                    cursor.execute("SELECT is_deleted FROM rebels_userrss WHERE rssId_id=%s AND userId_id=%s", [rss_id[0], user_id])
                     check = cursor.fetchone()
+                    print("The check variable is: %s", check)
                     if check==3:
-                        cursor.execute("UPDATE rebels_userrss SET is_deleted=1 WHERE rssId_id=%s AND userId_id=%s", [rss_id], [user_id])
+                        cursor.execute("UPDATE rebels_userrss SET is_deleted=1 WHERE rssId_id=%s AND userId_id=%s", [rss_id[0], user_id])
                     else:
-                        cursor.execute("INSERT INTO rebels_userrss (rssId_id, userId_id, is_deleted) VALUES (%s, $s, 1)", [rss_id], [user_id])
+                        cursor.execute("INSERT INTO rebels_userrss (rssId_id, userId_id, is_deleted) VALUES (%s, %s, 1)", [rss_id[0], user_id])
 
                 con.commit()
 
@@ -247,16 +249,16 @@ def AddNewRSS(request, response):
     if request.user.is_authenticated():
         # bring the user's rss id
         try:
-            use_id = request.user.id
+            user_id = request.user.id
             try:
                 con = lite.connect(DB_PATH)
 
                 with connection.cursor() as cursor:
-                    cursor.execution("INSERT INTO rebels_rss(link, title, description. date_rss) VALUES(%s,%s,%s,%s)",[link],[title],[desc],[date])
+                    cursor.execute("INSERT INTO rebels_rss(link, title, description, date_rss) VALUES(%s,%s,%s,%s)",[link,title,desc,date])
                     # bring the rss id to add it to userRssList
                     cursor.execute("SELECT rssId FROM rebels_rss WHERE link=%s",[link])
                     rss_id = cursor.fetchone()
-                    cursor.execute("INSERT INTO rebels_userrss (rssId_id, userId_id, is_deleted) VALUES (%s, $s, 1)", [rss_id], [user_id])
+                    cursor.execute("INSERT INTO rebels_userrss (rssId_id, userId_id, is_deleted) VALUES (%s, %s, 1)", [rss_id[0], user_id])
                 con.commit()
 
             except Exception as e:
@@ -278,7 +280,7 @@ def InsertArticle(context_dict):
     author = context_dict["author"]
     date = context_dict["date"]
     with connection.cursor() as cursor:
-        cursor.execution("INSERT INTO (url,title,description,body,author,date) VALUES(%s,%s,%s,%s,%s,%s)",[url],[title],[description],[body],[author],[date])
+        cursor.execute("INSERT INTO (url,title,description,body,author,date) VALUES(%s,%s,%s,%s,%s,%s)",[url,title,description,body,author,date])
         return
 ######################## Update user details #############################3
 def UpdateUserDetails(request, response):
@@ -311,8 +313,8 @@ def UpdateUserDetails(request, response):
                     p = cursor.fetchone()
                     if p is not None:
                         if p[0] > 0:
-                            flag=False
-                            return 1
+                            flag=1
+                            return flag
                     #update each field seperately
                     if not first=="":
                         cursor.execute("UPDATE auth_user SET first_name=%s WHERE id=%s", [first, user_id])
@@ -358,11 +360,11 @@ def CheckForUniqueEmail(email):
 
             with connection.cursor() as cursor:
                 ##email check
-                #print(email)
+                print(email)
                 if not email=="":
                     cursor.execute("SELECT id FROM auth_user WHERE email=%s", [email])
                     e = cursor.fetchone()
-                    #print("the query returned: "+str(e))
+                    print("the query returned: "+str(e))
                     if e is not None:
                         if e[0] > 0:
                             flag=True

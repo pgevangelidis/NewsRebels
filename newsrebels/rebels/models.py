@@ -15,7 +15,7 @@ class RSS(models.Model):
     title = models.CharField(max_length=128)
     link = models.URLField()
     description = models.CharField(max_length=256, null=True)
-    date_rss = models.DateField(auto_now=True)
+    date_rss = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -26,10 +26,11 @@ class Article(models.Model):
     articleId = models.IntegerField(primary_key=True)
     url = models.URLField()
     title = models.CharField(max_length=256)
-    description = models.TextField()
-    body = models.TextField()
+    description = models.TextField(null=True)
+    body = models.TextField(default=None)
     author = models.CharField(max_length=128)
-    date = models.DateField(auto_now=False)
+    thumbnail = models.URLField(null=True)
+    date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -40,21 +41,21 @@ class Rank(models.Model):
     is_deleted = models.IntegerField(default=1)
     rate = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.rate
 
 class ArticleRss(models.Model):
     rssId = models.ForeignKey(RSS, null=True)
     articleId = models.ForeignKey(Article, null=True)
     is_deleted = models.IntegerField(default=1)
 
-    def __str__(self):
-        return self.rssId
 
 class UserRSS(models.Model):
     userId = models.ForeignKey(User, null=True)
     rssId = models.ForeignKey(RSS, null=True)
     is_deleted = models.IntegerField(default=1)
 
-    def __str__(self):
-        return self.rssId
+
+class HasRead(models.Model):
+    userId = models.ForeignKey(User, null=True)
+    articleId = models.ForeignKey(Article, null=True)
+    has_read = models.IntegerField(default=1)
+    has_read_date = models.DateTimeField(auto_now=True)

@@ -14,7 +14,7 @@ $(window).on("load", function() {
     dataType: "json",
     method:"POST",
     type: "POST",
-    url: 'http://localhost:8000/rebels/get_first_link_to_crawl/',
+    url: '/rebels/get_first_link_to_crawl/',
     data: '{"getLink": true }',
     success: function(response2) {
       if (response2.status != 'ok') {
@@ -42,12 +42,12 @@ function getRssFeedFromUrl(url, callback) {
       rss_url: url,
       count: 10
     },
-    success: function(response) {
-      if (response.status != 'ok') {
-        throw response.message;
+    success: function(responseFromRssFetch) {
+      if (responseFromRssFetch.status != 'ok') {
+        throw responseFromRssFetch.message;
       }
-      console.log(response);
-      callback(response);
+      console.log(responseFromRssFetch);
+      callback( {   response: responseFromRssFetch , rss_url : url});
     }
   });
 }
@@ -82,9 +82,9 @@ function csrfSafeMethod(method) {
 }
 
 function pushDataToServerAndGetNewLink(responseFromRssFetch, callback) {
-  console.log('====== ' + responseFromRssFetch.feed.title + ' ======');
-  for (var i in responseFromRssFetch.items) {
-    var item = responseFromRssFetch.items[i];
+  console.log('====== ' + responseFromRssFetch.response.feed.title + ' ======');
+  for (var i in responseFromRssFetch.response.items) {
+    var item = responseFromRssFetch.response.items[i];
     console.log(item.title);
     //	console.log(item.description);
   }
@@ -99,12 +99,12 @@ function pushDataToServerAndGetNewLink(responseFromRssFetch, callback) {
   });
   $.ajax({
     async: true,
-    url: 'http://localhost:8000/rebels/crawl_rss_feed/',
+    url: '/rebels/crawl_rss_feed/',
     method: 'POST',
     type: "POST",
     contentType: "application/json; charset=utf-8",
     dataType: "json",
-    data: JSON.stringify({   response: responseFromRssFetch })  ,
+    data:   JSON.stringify( responseFromRssFetch ) ,
     success: function(response) {
       if (response.status != 'ok') {
         throw response.message;

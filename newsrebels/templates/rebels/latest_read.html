@@ -1,200 +1,179 @@
-{% extends 'base/base.html' %}
-{% load staticfiles %}
-{% block title_block %}
-    Lat Read
-{% endblock %}
-{% block body_block %}
-                <div class="container">
+{% extends 'base/base.html' %} {% load staticfiles %} {% block title_block %} Last Read News {% endblock %} {% block body_block %}
+<div class="container">
+  <script src="{% static 'js/latestRead.js'  %}" type="text/javascript"></script>
+  <hgroup class="mb20">
+    <h1>Last Read News</h1>
+  </hgroup>
 
-                  <hgroup class="mb20">
-                    <h1>Last Read</h1>
-                  </hgroup>
-                  <section class="col-xs-12 col-sm-6 col-md-12">
-                    <article class="search-result row">
-                      <div class="col-xs-12 col-sm-12 col-md-3">
-                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-2">
-                        <ul class="meta-search">
-                          <li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-                          <li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-                          <li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
-                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                        <form id="input-star-rating-form">
-                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
-                        </form>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
-                      </div>
-                      <span class="clearfix borda"></span>
-                    </article>
-
-                    <article class="search-result row">
-                      <div class="col-xs-12 col-sm-12 col-md-3">
-                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/food" alt="Lorem ipsum" /></a>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-2">
-                        <ul class="meta-search">
-                          <li><i class="glyphicon glyphicon-calendar"></i> <span>02/13/2014</span></li>
-                          <li><i class="glyphicon glyphicon-time"></i> <span>8:32 pm</span></li>
-                          <li><i class="glyphicon glyphicon-tags"></i> <span>Food</span></li>
-                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-7">
-                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                        <form id="input-star-rating-form">
-                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
-                        </form>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
-                      </div>
-                      <span class="clearfix borda"></span>
-                    </article>
-
-                    <article class="search-result row">
-                      <div class="col-xs-12 col-sm-12 col-md-3">
-                        <a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/sports" alt="Lorem ipsum" /></a>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-2">
-                        <ul class="meta-search">
-                          <li><i class="glyphicon glyphicon-calendar"></i> <span>01/11/2014</span></li>
-                          <li><i class="glyphicon glyphicon-time"></i> <span>10:13 am</span></li>
-                          <li><i class="glyphicon glyphicon-tags"></i> <span>Sport</span></li>
-                          <li><i class="glyphicon glyphicon-file"></i> <span>source</span></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-md-7">
-                        <h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>
-                        <form id="input-star-rating-form">
-                          <input id="input-star-rating" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="0">
-                        </form>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read More.</button>
-                        <button href="#" class="btn btn-primary btn-outline btn-sm">Read it from the provider.</button>
-                      </div>
-                      <span class="clearfix border"></span>
-                    </article>
-
-                  </section>
-                </div>
-
-                <style media="screen">
-                  #input-star-rating-form {
-                    font-size: 8px;
-                  }
-
-                  @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
+<div class="row" >
 
 
-                  .mb20 {
-                    margin-bottom: 20px;
-                  }
+  <section id="article_content" class="col-xs-12 col-sm-12 col-md-12">
 
-                  .search-text-color {
-                    color: rgb(156, 39, 176);
-                  }
+  </section>
+</div>
+  <br />
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">
+      <button id="load_more_sug_art" onclick="javascript:loadMoreLatestReadArticles(this);" class="btn btn-primary btn-outline btn-sm" style="font-size:18px">Load More Articles.</button>
+      <button id="loading_sug_art" class="btn btn-primary btn-outline btn-sm" style="font-size:18px;display:none;">Loading. <i class="fa fa-refresh fa-spin" ></i> </button>
+    </div>
+    <div class="col-4"></div>
+  </div>
 
-                  hgroup {
-                    padding-left: 15px;
-                    border-bottom: 1px solid #ccc;
-                  }
 
-                  hgroup h1 {
-                    font: 500 normal 1.625em "Roboto", Arial, Verdana, sans-serif;
-                    color: #2a3644;
-                    margin-top: 0;
-                    line-height: 1.15;
-                  }
+  <script id="category-template" type="text/x-handlebars-template">
 
-                  hgroup h2.lead {
-                    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
-                    color: #2a3644;
-                    margin: 0;
-                    padding-bottom: 10px;
-                  }
+    {% templatetag openvariable %}#each articles{% templatetag closevariable %}
+    <article class="search-result row">
+      <div class="hiddenFieldWithTheArticlesURL" style="display:none">{% templatetag openvariable %}source{% templatetag closevariable %}</div>
+      <div class="col-xs-12 col-sm-12 col-md-3">
+        <a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )" title="{% templatetag openvariable %}title{% templatetag closevariable %}" class="thumbnail"><img src="{% templatetag openvariable %}image{% templatetag closevariable %}"  /></a>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-2">
+        <ul class="meta-search">
+          <li><i class="glyphicon glyphicon-calendar"></i> <span>{% templatetag openvariable %}date{% templatetag closevariable %}</span></li>
+          <li><i class="glyphicon glyphicon-file"></i> <span> <a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , '{% templatetag openvariable %}source{% templatetag closevariable %}' )">  source </a> </span></li>
+        </ul>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+        <h3><a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )"  >{% templatetag openvariable %}title{% templatetag closevariable %}</a></h3>
+        <p>{% templatetag openvariable %}description{% templatetag closevariable %}</p>
 
-                  .search-result .thumbnail {
-                    border-radius: 0 !important;
-                  }
+      <a  href="javascript:void(0)" onclick="javascript:read_more_btn(this , 'http://{{ request.META.HTTP_HOST }}/rebels/article/?target_url={% templatetag openvariable %}source{% templatetag closevariable %}' )"  class="btn btn-primary btn-outline btn-sm">Read More.</a>
+        <a href="javascript:void(0)" onclick="javascript:read_more_btn(this , '{% templatetag openvariable %}source{% templatetag closevariable %}' ) " class="btn btn-primary btn-outline btn-sm">Read it from the provider.</a>
+      </div>
+    </article>
 
-                  .search-result:first-child {
-                    margin-top: 0 !important;
-                  }
+    {% templatetag openvariable %}/each{% templatetag closevariable %}
 
-                  .search-result {
-                    margin-top: 20px;
-                  }
+  </script>
 
-                  .search-result .col-md-2 {
-                    border-right: 1px dotted #ccc;
-                    min-height: 140px;
-                  }
 
-                  .search-result ul {
-                    padding-left: 0 !important;
-                    list-style: none;
-                  }
+  <script type="text/javascript">
+    var article_data = {{json_latest_read_articles | safe}};
+    // grab our template code from the DOM
+    var source = $("#category-template").html();
+    // compile the template so we can use it
+    var template = Handlebars.compile(source);
+    // generate HTML from the data
+    var html = template(article_data);
+    // add the HTML to the content div
+    $('#article_content').html(html);
+  </script>
+</div>
 
-                  .search-result ul li {
-                    font: 400 normal .85em "Roboto", Arial, Verdana, sans-serif;
-                    line-height: 30px;
-                  }
+<style media="screen">
+  #input-star-rating-form {
+    font-size: 8px;
+  }
 
-                  .search-result ul li i {
-                    padding-right: 5px;
-                  }
+  @import "http://fonts.googleapis.com/css?family=Roboto:300,400,500,700";
 
-                  .search-result .col-md-7 {
-                    position: relative;
-                  }
 
-                  .search-result h3 {
-                    font: 500 normal 1.375em "Roboto", Arial, Verdana, sans-serif;
-                    margin-top: 0 !important;
-                    margin-bottom: 10px !important;
-                  }
+  .mb20 {
+    margin-bottom: 20px;
+  }
 
-                  .search-result h3>a,
-                  .search-result>i {
-                    color: #248dc1 !important;
-                  }
+  .search-text-color {
+    color: rgb(156, 39, 176);
+  }
 
-                  .search-result p {
-                    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
-                  }
+  hgroup {
+    padding-left: 15px;
+    border-bottom: 1px solid #ccc;
+  }
 
-                  .search-result span.plus {
-                    position: absolute;
-                    right: 0;
-                    top: 126px;
-                  }
+  hgroup h1 {
+    font: 500 normal 1.625em "Roboto", Arial, Verdana, sans-serif;
+    color: #2a3644;
+    margin-top: 0;
+    line-height: 1.15;
+  }
 
-                  .search-result span.plus a {
-                    background-color: #248dc1;
-                    padding: 5px 5px 3px 5px;
-                  }
+  hgroup h2.lead {
+    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
+    color: #2a3644;
+    margin: 0;
+    padding-bottom: 10px;
+  }
 
-                  .search-result span.plus a:hover {
-                    background-color: #414141;
-                  }
+  .search-result .thumbnail {
+    border-radius: 0 !important;
+  }
 
-                  .search-result span.plus a i {
-                    color: #fff !important;
-                  }
+  .search-result:first-child {
+    margin-top: 0 !important;
+  }
 
-                  .search-result span.border {
-                    display: block;
-                    width: 97%;
-                    margin: 0 15px;
-                    border-bottom: 1px dotted #ccc;
-                  }
-                </style>
+  .search-result {
+    margin-top: 20px;
+  }
+
+  .search-result .col-md-2 {
+    border-right: 1px dotted #ccc;
+    min-height: 140px;
+  }
+
+  .search-result ul {
+    padding-left: 0 !important;
+    list-style: none;
+  }
+
+  .search-result ul li {
+    font: 400 normal .85em "Roboto", Arial, Verdana, sans-serif;
+    line-height: 30px;
+  }
+
+  .search-result ul li i {
+    padding-right: 5px;
+  }
+
+  .search-result .col-md-7 {
+    position: relative;
+  }
+
+  .search-result h3 {
+    font: 500 normal 1.375em "Roboto", Arial, Verdana, sans-serif;
+    margin-top: 0 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .search-result h3>a,
+  .search-result>i {
+    color: #248dc1 !important;
+  }
+
+  .search-result p {
+    font: normal normal 1.125em "Roboto", Arial, Verdana, sans-serif;
+  }
+
+  .search-result span.plus {
+    position: absolute;
+    right: 0;
+    top: 126px;
+  }
+
+  .search-result span.plus a {
+    background-color: #248dc1;
+    padding: 5px 5px 3px 5px;
+  }
+
+  .search-result span.plus a:hover {
+    background-color: #414141;
+  }
+
+  .search-result span.plus a i {
+    color: #fff !important;
+  }
+
+  .search-result span.border {
+    display: block;
+    width: 97%;
+    margin: 0 15px;
+    border-bottom: 1px dotted #ccc;
+  }
+</style>
 
 {% endblock %}

@@ -28,7 +28,7 @@ def index(request):
 
 def about(request):
     request.session.set_test_cookie()
-    return render(request, 'rebels/about.html',)
+    return render(request, 'rebels/readMore.html',)
 
 def register(request):
 	if not request.user.is_authenticated():
@@ -45,9 +45,9 @@ def register(request):
 				#print("email from form: ")
 				#print(email)
 				flag = CheckForUniqueEmail(email)
-				#print("flag: "+str(flag))
+				print("flag: %s",flag)
 
-				if not flag:
+				if flag:
 					user_form = UserForm()
 					return render(request,'rebels/register.html', {'user_form': user_form, 'registered': registered})
 				else:
@@ -61,7 +61,7 @@ def register(request):
 
 					#user = authenticate(request, username=username, password=password)
 					login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-					return redirect(reverse('suggested'))
+					return redirect(reverse('profile'))
 
 			else:
 				context_dict = {'boldmessage' : "A user with the same credentials already exists. Please change your credential."}
@@ -115,19 +115,6 @@ def user_login(request):
 		# blank dictionary object...
 		return render(request, 'rebels/index.html', {})
 
-#def some_view(request):
-#	if not request.user.is_authenticated():
-#		return HttpResponse("You are logged in.")
-#	else:
-#		return HttpResponse("You are not logged in.")
-
-
-@login_required(login_url='/rebels/')
-def suggested(request):
-	request.session.set_test_cookie()
-	return render(request, 'rebels/suggested.html')
-
-
 @login_required(login_url='/rebels/')
 def article(request):
 	request.session.set_test_cookie()
@@ -171,10 +158,6 @@ def search(request):
 	else:
 		return HttpResponseRedirect(reverse('register'))
 
-@login_required(login_url='/rebels/')
-def latest_read(request):
-    request.session.set_test_cookie()
-    return render(request, 'rebels/latest_read.html',)
 
 def terms_and_conditions(request):
     request.session.set_test_cookie()

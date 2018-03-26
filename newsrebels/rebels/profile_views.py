@@ -154,9 +154,12 @@ def delete_rss_from_user(request):
 		if request.method == 'POST' and request.user.is_authenticated():
 			#print(request.body)
 			response = json.loads(request.body)
+			print("eleos")
 			print("the url for delete is: " ,  response["url_to_delete"])
 
+
 			if response:
+				print("check")
 				#### PROS paulo:
 				#### -----> edw na diegrapse to rss apo th  bash (isDeleted = numOfDelete) prwta omws elegkse oti autos o user den exei hdh auto to rss
 				DeleteRSSfromList(request, response["url_to_delete"])
@@ -221,32 +224,3 @@ def update_user_settings(request):
 		data["status"] = "notOk"
 		data["message"] = "this is not an ajax request"
 		return JsonResponse(data)
-
-
-@login_required(login_url='/rebels/')
-def delete_rss_from_user(request):
-    #https://docs.djangoproject.com/en/1.9/ref/csrf/
-    response = None
-    data = {}
-    print(request)
-    if request.is_ajax():
-        if request.method == 'POST':
-            #print(request.body)
-            response = json.loads(request.body)
-            print("the url for delete is: " ,  response["url_to_delete"])
-            if response:
-                data["status"] = "ok"
-
-                return JsonResponse(data)
-            else:
-                data["status"] = "notOk"
-                data["message"] = "the response was empty"
-                return JsonResponse(data)
-        else:
-            data["status"] = "notOk"
-            data["message"] = "this is not a get method, post needed"
-            return JsonResponse(data)
-    else:
-        data["status"] = "notOk"
-        data["message"] = "this is not an ajax request"
-        return JsonResponse(data)
