@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from rebels.forms import UserForm  #, UserProfileForm
-from rebels.crawler_queries import UserAllArticles
+from rebels.crawler_queries import UserAllArticlesForSearch
 from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
